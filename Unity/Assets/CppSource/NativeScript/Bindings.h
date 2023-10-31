@@ -1232,12 +1232,13 @@ namespace System
 		Decimal(System::UInt64 value);
 		explicit operator System::ValueType();
 		explicit operator System::Object();
+		explicit operator System::Runtime::Serialization::IDeserializationCallback();
+		explicit operator System::IFormattable();
+		explicit operator System::ISpanFormattable();
 		explicit operator System::IComparable();
 		explicit operator System::IComparable_1<System::Decimal>();
 		explicit operator System::IConvertible();
 		explicit operator System::IEquatable_1<System::Decimal>();
-		explicit operator System::Runtime::Serialization::IDeserializationCallback();
-		explicit operator System::IFormattable();
 	};
 }
 
@@ -1250,9 +1251,10 @@ namespace UnityEngine
 		System::Single x;
 		System::Single y;
 		System::Single z;
-		UnityEngine::Vector3 operator+(UnityEngine::Vector3& a);
+		virtual UnityEngine::Vector3 operator+(UnityEngine::Vector3& a);
 		explicit operator System::ValueType();
 		explicit operator System::Object();
+		explicit operator System::IFormattable();
 		explicit operator System::IEquatable_1<UnityEngine::Vector3>();
 	};
 }
@@ -1330,7 +1332,7 @@ namespace System
 			bool operator==(const IEnumerator& other) const;
 			bool operator!=(const IEnumerator& other) const;
 			System::Object GetCurrent();
-			System::Boolean MoveNext();
+			virtual System::Boolean MoveNext();
 		};
 	}
 }
@@ -1523,9 +1525,9 @@ namespace UnityEngine
 		explicit operator System::Enum();
 		explicit operator System::ValueType();
 		explicit operator System::Object();
+		explicit operator System::IFormattable();
 		explicit operator System::IComparable();
 		explicit operator System::IConvertible();
-		explicit operator System::IFormattable();
 	};
 }
 

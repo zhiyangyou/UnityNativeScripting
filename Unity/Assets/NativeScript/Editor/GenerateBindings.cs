@@ -716,7 +716,8 @@ namespace NativeScript.Editor
 #endif
 			assemblies[31] = typeof(Canvas).Assembly; // Unity UI module
 #if UNITY_2020_1_OR_NEWER
-			assemblies[32] = typeof(UnityEngine.Networking.Utility).Assembly; // Unity network module
+			// assemblies[32] = typeof(UnityEngine.Networking.Utility).Assembly; // Unity network module
+			assemblies[32] = typeof(UnityEngine.Networking.UnityWebRequestAsyncOperation).Assembly; // Unity network module
 #else
 			assemblies[32] = typeof(UnityEngine.Networking.NetworkTransport).Assembly; // Unity network module
 #endif
