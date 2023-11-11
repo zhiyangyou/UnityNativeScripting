@@ -290,26 +290,52 @@ namespace NativeScript.Editor
 		private static readonly DirectoryInfo ProjectDir =
 			new DirectoryInfo(AssetsDirPath).Parent;
 		static readonly string ProjectDirPath = ProjectDir.FullName;
-		static readonly string CppDirPath =
-			Path.Combine(
-				Path.Combine(
-					Path.Combine(
-						ProjectDirPath,
-						"Assets"),
-					"CppSource"),
-				"NativeScript");
+
+		private static string _gitBaseDir;
+		private static string GitBaseDir
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(_gitBaseDir))
+				{
+					_gitBaseDir = new DirectoryInfo(Application.dataPath).Parent.Parent.Parent.FullName;
+				}
+
+				return _gitBaseDir;
+			}
+		}
+
+		private static string CsharpOutputPath  => $@"{GitBaseDir}\UnityCppTest\Assets\Scripts\App\CppPlugin\UnityBindings\UnityBindings.cs";
+		private static string _cppOutputDir;
+		private static  string CppOutputDir  
+		{
+			get
+			{
+				if (string.IsNullOrEmpty(_cppOutputDir))
+				{
+					_cppOutputDir = $@"{GitBaseDir}\CppPlugin\DLLPlugin";
+					if (!Directory.Exists(_cppOutputDir))
+					{
+						Directory.CreateDirectory(_cppOutputDir);
+					}
+				}
+				return _cppOutputDir;
+			}
+		} 
+		
 		static readonly string CsharpPath = Path.Combine(
 			AssetsDirPath,
 			Path.Combine(
 				"NativeScript",
 				"Bindings.cs"));
 		static readonly string CppHeaderPath = Path.Combine(
-			CppDirPath,
+			CppOutputDir,
 			"Bindings.h");
 		static readonly string CppSourcePath = Path.Combine(
-			CppDirPath,
+			CppOutputDir,
 			"Bindings.cpp");
-		
+
+		private static readonly string jsonPath = @$"{GitBaseDir}\UnityNativeScripting\Unity\Assets\NativeScriptTypes.json";
 		static readonly FieldOrderComparer DefaultFieldOrderComparer
 			= new FieldOrderComparer();
 
@@ -634,9 +660,7 @@ namespace NativeScript.Editor
 		
 		static JsonDocument LoadJson()
 		{
-			string jsonPath = Path.Combine(
-				Application.dataPath,
-				NativeScriptConstants.JSON_CONFIG_PATH);
+			
 			string json = File.ReadAllText(jsonPath);
 			return JsonUtility.FromJson<JsonDocument>(json);
 		}
