@@ -6,6 +6,9 @@
 			"Name": " System.IFormattable"
 		},
 		{
+			"Name": " System.ISpanFormattable"
+		},
+		{
 			"Name": " System.IConvertible"
 		},
 		{
